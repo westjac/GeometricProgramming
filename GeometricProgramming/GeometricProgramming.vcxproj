@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="GeometricProgramming.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
