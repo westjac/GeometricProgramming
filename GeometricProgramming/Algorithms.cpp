@@ -1,7 +1,5 @@
-#include "Point.cpp"
-#include "Algorithms.h"
 #include <vector>
-#include "Line.cpp"
+#include "Algorithms.h"
 
 using namespace std;
 
@@ -59,22 +57,24 @@ bool OnSegment(Point p1, Point p2, Point p3)
 	return false;
 }
 
-bool AnySegmentIntersect(vector<Line> lines)
-{
-	//T = 0 the RB tree
-	//Sort the line segments
-	vector<Line> sortedSegments = lines;
-
-	for (Line point : sortedSegments)
-	{
-		//If p is a left end point of segment s
-			//INSERT(T, s)
-			//If (ABOVE(T,s) exisits && intersects s) OR (BELOW(T,s) exists && interests s)
-				//return true
-		//If p is a right end point of segment s
-			//if(ABOVE(T,s) and BELOW(T,s) exist) and (ABOVE(T,s) intersects BELOW(T, s))
-				//return true
-			//DELETE(T,s)
-		//Return false
-	}
-}
+//bool AnySegmentIntersect(vector<Line> lines)
+//{
+//	//T = 0 the RB tree
+//	//Sort the line segments
+//	vector<Line> sortedSegments = lines;
+//
+//	//for (Line point : sortedSegments)
+//	//{
+//		//If p is a left end point of segment s
+//			//INSERT(T, s)
+//			//If (ABOVE(T,s) exisits && intersects s) OR (BELOW(T,s) exists && interests s)
+//				//return true
+//		//If p is a right end point of segment s
+//			//if(ABOVE(T,s) and BELOW(T,s) exist) and (ABOVE(T,s) intersects BELOW(T, s))
+//				//return true
+//			//DELETE(T,s)
+//		//Return false
+//	//}
+//
+//	return false;
+//}

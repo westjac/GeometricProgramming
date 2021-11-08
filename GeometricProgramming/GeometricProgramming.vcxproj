@@ -146,6 +146,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithms.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="Point.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="poly00.txt" />
+    <Text Include="poly01.txt" />
+    <Text Include="poly02.txt" />
+    <Text Include="poly03.txt" />
+    <Text Include="poly04.txt" />
+    <Text Include="poly05.txt" />
+    <Text Include="poly06.txt" />
+    <Text Include="poly07.txt" />
+    <Text Include="poly08.txt" />
+    <Text Include="poly09.txt" />
+    <Text Include="poly10.txt" />
+    <Text Include="poly11.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

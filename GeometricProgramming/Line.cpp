@@ -1,25 +1,23 @@
-#include "Point.cpp"
+#include "Line.h"
 
-class Line
+Line::Line(Point Start, Point End, int PolygonId)
 {
-	public:
-		Line(Point Start, Point End)
-		{
-			start = Start;
-			end = End;
-		}
+	start = Start;
+	end = End;
+	polygonId = PolygonId;
+}
 
-		Point Start()
-		{
-			return start;
-		}
+Point Line::Start()
+{
+	return start;
+}
 
-		Point End()
-		{
-			return end;
-		}
+Point Line::End()
+{
+	return end;
+}
 
-	private:
-		Point start;
-		Point end;
-};
+int Line::PolygonId()
+{
+	return polygonId;
+}

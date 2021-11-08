@@ -1,26 +1,19 @@
+#include "Point.h"
 
-class Point
-{
-	public:
-		Point() {
-			x = 0;
-			y = 0;
-		}
+Point::Point(int X, int Y) {
+	x = X;
+	y = Y;
+}
 
-		Point(int X, int Y) {
-			x = X;
-			y = Y;
-		}
+Point::Point() {
+	x = 0;
+	y = 0;
+}
 
-		int X() {
-			return x;
-		}
+int Point::X() {
+	return x;
+}
 
-		int Y() {
-			return y;
-		}
-
-	private:
-		int x;
-		int y;
-};
+int Point::Y() {
+	return y;
+}
