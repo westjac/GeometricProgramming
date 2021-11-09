@@ -143,11 +143,14 @@
     <ClCompile Include="GeometricProgramming.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithms.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="poly00.txt" />
@@ -162,6 +165,9 @@
     <Text Include="poly09.txt" />
     <Text Include="poly10.txt" />
     <Text Include="poly11.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GeometricProgramming.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,9 @@
 #include <vector>
+#include <algorithm>
 #include "Algorithms.h"
 
-using namespace std;
+
+
 
 int SegIntersect(Point p1, Point p2, Point p3, Point p4)
 {
@@ -57,24 +59,48 @@ bool OnSegment(Point p1, Point p2, Point p3)
 	return false;
 }
 
-//bool AnySegmentIntersect(vector<Line> lines)
-//{
-//	//T = 0 the RB tree
-//	//Sort the line segments
-//	vector<Line> sortedSegments = lines;
-//
-//	//for (Line point : sortedSegments)
-//	//{
-//		//If p is a left end point of segment s
-//			//INSERT(T, s)
-//			//If (ABOVE(T,s) exisits && intersects s) OR (BELOW(T,s) exists && interests s)
-//				//return true
-//		//If p is a right end point of segment s
-//			//if(ABOVE(T,s) and BELOW(T,s) exist) and (ABOVE(T,s) intersects BELOW(T, s))
-//				//return true
-//			//DELETE(T,s)
-//		//Return false
-//	//}
-//
-//	return false;
-//}
+bool AnySegmentIntersect(vector<Line> lines)
+{
+	//T = 0 the RB tree map or set
+	//Sort the line segments
+	vector<Line> sortedLines(lines);
+	sort(sortedLines.begin(), sortedLines.end(), lineCompareator);
+	vector<Point> sortedPoints; //priority_queue min heap
+
+	for(Line l : sortedLines)
+	{
+		Point left = l.Left();
+		left.AddMetadata(l.PolygonId(), "L");
+		Point right = l.Right();
+		right.AddMetadata(l.PolygonId(), "R")
+			//push onto queue left and right
+	}
+	for(Point p: sortedPoints)
+	{
+		if(p.EndPoint() == "L")
+		{
+			INSERT(T, s);
+			if(ABOVE(T,s) != null && ABOVE(T,s))
+				return true
+		}
+		if(p.EndPoint() == "R")
+		{
+		
+		}
+	}
+	//s -> current segment point belongs to
+	//for (Point p : sortedSegments)
+	//{
+		//If p is a left end point of segment s
+			//INSERT(T, s)
+			//If (ABOVE(T,s) exisits && intersects s) OR (BELOW(T,s) exists && interests s)
+				//return true
+		//If p is a right end point of segment s
+			//if(ABOVE(T,s) and BELOW(T,s) exist) and (ABOVE(T,s) intersects BELOW(T, s))
+				//return true
+			//DELETE(T,s)
+		//Return false
+	//}
+
+	return false;
+}

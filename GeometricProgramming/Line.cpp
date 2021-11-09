@@ -1,20 +1,20 @@
 #include "Line.h"
 
-Line::Line(Point Start, Point End, int PolygonId)
+Line::Line(Point Left, Point Right, int PolygonId)
 {
-	start = Start;
-	end = End;
+	left = Left;
+	right = Right;
 	polygonId = PolygonId;
 }
 
-Point Line::Start()
+Point Line::Left()
 {
-	return start;
+	return left;
 }
 
-Point Line::End()
+Point Line::Right()
 {
-	return end;
+	return right;
 }
 
 int Line::PolygonId()

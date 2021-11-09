@@ -1,17 +1,24 @@
+#include <string>
 #ifndef POINT_H
 #define POINT_H
 
 class Point
 {
 	public:
-		Point(int X, int Y);
+		Point(float X, float Y);
 		Point();
-		int X();
-		int Y();
+		float X();
+		float Y();
+		int Segment();
+		string EndPoint();
+		void AddMetadata(int Segment, string EndPoint);
 
 	private:
-		int x;
-		int y;
+		float x;
+		float y;
+		int segment;
+		string endPoint;
+		//Line Id
 };
 
 #endif

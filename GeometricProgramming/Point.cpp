@@ -1,6 +1,6 @@
 #include "Point.h"
 
-Point::Point(int X, int Y) {
+Point::Point(float X, float Y) {
 	x = X;
 	y = Y;
 }
@@ -10,10 +10,27 @@ Point::Point() {
 	y = 0;
 }
 
-int Point::X() {
+float Point::X() {
 	return x;
 }
 
-int Point::Y() {
+float Point::Y() {
 	return y;
 }
+
+int Point::Segment()
+{
+	return segment;
+}
+
+string Point::EndPoint()
+{
+	return endPoint;
+}
+
+void Point::AddMetadata(int Segment, string EndPoint)
+{
+	segment = Segment;
+	endPoint = EndPoint;
+}
+
