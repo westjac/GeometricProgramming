@@ -35,11 +35,12 @@ int main(int argc, char *argv[])
         //line Test 2 AB and EF (Point on Line)
         Point a1 = Point(-2, 1);
         Point a2 = Point(2, 0);
+        Line s1 = Line(a1, a2, 0, 0);
         Point b1 = Point(-1, 4);
         Point b2 = Point(0, 0.5);
+        Line s2 = Line(b1, b2, 0, 0);
 
-
-        bool intersect = SegIntersect(a1, a2, b1, b2);
+        bool intersect = SegIntersect(s1, s2);
         
         //cout << "Wrong number of arguments" << endl;
         return 0;

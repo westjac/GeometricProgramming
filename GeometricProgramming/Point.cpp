@@ -3,15 +3,24 @@
 Point::Point(float X, float Y) {
 	x = X;
 	y = Y;
-	segment = 0;
+	polygon = 0;
 	endPoint = "N";
 	lineId = 0;
+}
+
+Point::Point(float X, float Y, int Polygon, string EndPoint, int LineId)
+{
+	x = X;
+	y = Y;
+	polygon = Polygon;
+	endPoint = EndPoint;
+	lineId = LineId;
 }
 
 Point::Point() {
 	x = 0;
 	y = 0;
-	segment = 0;
+	polygon = 0;
 	endPoint = "N";
 	lineId = 0;
 }
@@ -24,9 +33,9 @@ float Point::Y() {
 	return y;
 }
 
-int Point::Segment()
+int Point::Polygon()
 {
-	return segment;
+	return polygon;
 }
 
 string Point::EndPoint()
@@ -39,9 +48,9 @@ int Point::LineId()
 	return lineId;
 }
 
-void Point::AddMetadata(int Segment, string EndPoint, int LineId)
+void Point::AddMetadata(int Polygon, string EndPoint, int LineId)
 {
-	segment = Segment;
+	polygon = Polygon;
 	endPoint = EndPoint;
 	lineId = LineId;
 }

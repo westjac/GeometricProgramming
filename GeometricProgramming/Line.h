@@ -11,12 +11,12 @@ class Line
 		Point Right();
 		int LineId();
 		int PolygonId();
+		int lineId;
 
 	private:
 		Point left;
 		Point right;
 		int polygonId;
-		int lineId;
 };
 
 #endif

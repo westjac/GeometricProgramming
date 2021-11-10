@@ -2,11 +2,13 @@
 #include <algorithm>
 #include "Algorithms.h"
 
-
-
-
-int SegIntersect(Point p1, Point p2, Point p3, Point p4)
+int SegIntersect(Line s1, Line s2)
 {
+	Point p1 = s1.Left();
+	Point p2 = s1.Right();
+	Point p3 = s2.Left();
+	Point p4 = s2.Right();
+
 	int dir1 = Direction(p3, p4, p1);
 	int dir2 = Direction(p3, p4, p2);
 	int dir3 = Direction(p1, p2, p3);
@@ -61,9 +63,81 @@ bool OnSegment(Point p1, Point p2, Point p3)
 		return false;
 }
 
+bool AnySegmentIntersect(vector<Line> lines)
+{
+	//set T - Active points
+	set<Point> T;
+	//unordered map
+
+	//Push all sweep line events to a vector of Points
+	vector<Point> sortedPoints;
+	for (Line line : lines)
+	{
+		sortedPoints.push_back(Point(line.Left().X(), line.Left().Y(), line.PolygonId(), "L", line.LineId()));
+		sortedPoints.push_back(Point(line.Right().X(), line.Right().Y(), line.PolygonId(), "R", line.LineId()));
+	}
+
+	//Sort endpoints of the lines
+	sort(sortedPoints.begin(), sortedPoints.end(), cmpPts);
+
+	//Walk through all points
+	for (Point point : sortedPoints)
+	{
+		if (point.EndPoint() == "L")
+		{
+			T.insert(point);
+			set<Point>::iterator above = T.lower_bound(point);
+			set<Point>::iterator below = BELOW(T, above);
+			if ((above != T.end() && SegIntersect(lines[((above)->LineId())], lines[point.LineId()])) ||
+				(below != T.end() && SegIntersect(lines[(below)->LineId()], lines[point.LineId()])))
+				return true;
+		}
+		if (point.EndPoint() == "R")
+		{
+			//Get the iterator
+			int index = point.LineId();
+			auto itr = T.find(Point(lines[index].Left().X(), lines[index].Left().Y(), point.Polygon(), "L", point.LineId()));
+			
+			set<Point>::iterator above = ABOVE(T, itr);
+			set<Point>::iterator below = BELOW(T, itr);
+
+			if ((above != T.end() && below != T.end()) && SegIntersect(lines[(below)->LineId()], lines[point.LineId()]))
+				return true;
+			
+			//Remove current segment
+			T.erase(itr);
+		}
+	}
+	return false;
+}
+
+// Find predecessor of iterator in s.
+set<Point>::iterator BELOW(set<Point>& T, set<Point>::iterator it) {
+	if (it == T.begin())
+		return T.end();
+	else
+		return --it;
+}
+
+// Find successor of iterator in s.
+set<Point>::iterator ABOVE(set<Point>& T, set<Point>::iterator it) {
+	return ++it;
+}
+
+//Line ABOVE(set<Point> T, Point p)
+//{
+//	int lineId = s.LineId()
+//		return Line AB();
+//}
+//
+//Line BELOW(set<Point> T, Point p)
+//{
+//	return Line();
+//}
+
 //bool AnySegmentIntersect(vector<Line> lines, vector<Point> points)
 //{
-//	//T = 0 the RB tree map
+//	//T = 0 the RB tree set
 //	map<int, Line> T;
 //	
 //	//Sort the line segments
@@ -116,13 +190,4 @@ bool OnSegment(Point p1, Point p2, Point p3)
 //	}
 //}
 //
-//Line ABOVE(map<int, Line> T, Line s)
-//{
-//	int lineId = s.LineId()
-//	return Line AB();
-//}
-//
-//Line BELOW(map<int, Line> T, Line s)
-//{
-//	return Line();
-//}
+
