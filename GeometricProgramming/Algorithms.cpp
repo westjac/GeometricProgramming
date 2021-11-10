@@ -12,11 +12,9 @@ int SegIntersect(Point p1, Point p2, Point p3, Point p4)
 	int dir3 = Direction(p1, p2, p3);
 	int dir4 = Direction(p1, p2, p4);
 
-	if ((dir1 > 0 && dir2 < 0) || (dir1 < 0 && dir2 > 0) &&
-		(dir3 > 0 && dir4 < 0) || (dir3 < 0 && dir4 > 0))
-	{
+	if (((dir1 > 0 && dir2 < 0) || (dir1 < 0 && dir2 > 0)) &&
+		((dir3 > 0 && dir4 < 0) || (dir3 < 0 && dir4 > 0)))
 		return true;
-	}
 	else if (dir1 == 0 && OnSegment(p3, p4, p1))
 		return true;
 	else if (dir2 == 0 && OnSegment(p3, p4, p2))
@@ -34,21 +32,21 @@ int Direction(Point p1, Point p2, Point p3)
 	//assume sign_of()
 	//returns +1, 0, or -1 to indicate direction
 
-	return signOf(crossProduct(p1, p3, p1, p2));
+	return signOf(crossProduct(p1, p2, p3));
 }
 
-int crossProduct(Point startLine1, Point endLine1, Point startLine2, Point endLine2)
+float crossProduct(Point p1, Point p2, Point p3)
 {
-	return 0;
+	return (p2.Y() - p1.Y()) * (p3.X() - p2.X()) - ((p3.Y() - p2.Y()) * (p2.X() - p1.X()));
 }
 
-int signOf(int crossProductResult)
+int signOf(float crossProductResult)
 {
 	if (crossProductResult == 0) //Same Segment
 		return 0;
-	else if (crossProductResult > 0)
+	else if (crossProductResult > 0) //Right
 		return 1;
-	else if (crossProductResult < 0)
+	else if (crossProductResult < 0) //Left
 		return -1;
 	else
 		return 404; //Error
@@ -56,51 +54,75 @@ int signOf(int crossProductResult)
 
 bool OnSegment(Point p1, Point p2, Point p3)
 {
-	return false;
+	if ((min(p1.X(), p2.X()) <= p3.X() && p3.X() <= max(p1.X(), p3.X())) &&
+		(min(p1.Y(), p2.Y()) <= p3.Y() && p3.Y() <= max(p1.Y(), p3.Y())))
+		return true;
+	else
+		return false;
 }
 
-bool AnySegmentIntersect(vector<Line> lines)
-{
-	//T = 0 the RB tree map or set
-	//Sort the line segments
-	vector<Line> sortedLines(lines);
-	sort(sortedLines.begin(), sortedLines.end(), lineCompareator);
-	vector<Point> sortedPoints; //priority_queue min heap
-
-	for(Line l : sortedLines)
-	{
-		Point left = l.Left();
-		left.AddMetadata(l.PolygonId(), "L");
-		Point right = l.Right();
-		right.AddMetadata(l.PolygonId(), "R")
-			//push onto queue left and right
-	}
-	for(Point p: sortedPoints)
-	{
-		if(p.EndPoint() == "L")
-		{
-			INSERT(T, s);
-			if(ABOVE(T,s) != null && ABOVE(T,s))
-				return true
-		}
-		if(p.EndPoint() == "R")
-		{
-		
-		}
-	}
-	//s -> current segment point belongs to
-	//for (Point p : sortedSegments)
-	//{
-		//If p is a left end point of segment s
-			//INSERT(T, s)
-			//If (ABOVE(T,s) exisits && intersects s) OR (BELOW(T,s) exists && interests s)
-				//return true
-		//If p is a right end point of segment s
-			//if(ABOVE(T,s) and BELOW(T,s) exist) and (ABOVE(T,s) intersects BELOW(T, s))
-				//return true
-			//DELETE(T,s)
-		//Return false
-	//}
-
-	return false;
-}
+//bool AnySegmentIntersect(vector<Line> lines, vector<Point> points)
+//{
+//	//T = 0 the RB tree map
+//	map<int, Line> T;
+//	
+//	//Sort the line segments
+//	auto pointCompare = [](Point a, Point b)
+//	{
+//		if (a.X() == b.X()) //If the Xs are the same
+//			return a.Y() < b.Y(); //Lowest Y first
+//		else
+//			return a.X() < b.X(); //Lowest X
+//	};
+//
+//	vector<Point> sortedPoints;
+//
+//	for(Line l : lines)
+//	{
+//		Point left = l.Left();
+//		left.AddMetadata(l.PolygonId(), "L", l.LineId());
+//		Point right = l.Right();
+//		right.AddMetadata(l.PolygonId(), "R", l.LineId());
+//		sortedPoints.push_back(left);
+//		sortedPoints.push_back(right);
+//	}
+//	//Sort the endpoints from left to right
+//	sort(sortedPoints.begin(), sortedPoints.end(), cmpPts);
+//
+//	int z = 0;
+//	for (Point p : sortedPoints)
+//	{
+//		Line s = lines[p.LineId()];
+//		if (p.EndPoint() == "L")
+//		{
+//			T.insert(pair<int, Line>(p.LineId(), s));
+//			if ((ABOVE(T, s).L().X() != -1 && SegIntersect(s.Left(), s.Right(), ABOVE(T, s).L(), ABOVE(T, s).R()) == true) ||
+//				(BELOW(T, s).L().X() != -1 && SegIntersect(s.Left(), s.Right(), BELOW(T, s).L(), BELOW(T, s).R()) == true))
+//			{
+//				return true;
+//
+//			};
+//		}
+//		if (p.EndPoint() == "R")
+//		{
+//			if ((ABOVE(T, s).L().X() != -1 && BELOW(T, s).L().X() != -1) &&
+//				SegIntersect(s.Left(), s.Right(), ABOVE(T, s).L(), ABOVE(T, s).R()) == true))
+//				{
+//				return true;
+//
+//				};
+//		}
+//		return false;
+//	}
+//}
+//
+//Line ABOVE(map<int, Line> T, Line s)
+//{
+//	int lineId = s.LineId()
+//	return Line AB();
+//}
+//
+//Line BELOW(map<int, Line> T, Line s)
+//{
+//	return Line();
+//}

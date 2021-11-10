@@ -6,15 +6,17 @@
 class Line
 {
 	public:
-		Line(Point Left, Point Right, int PolygonId);
+		Line(Point Left, Point Right, int PolygonId, int lineId);
 		Point Left();
 		Point Right();
+		int LineId();
 		int PolygonId();
 
 	private:
 		Point left;
 		Point right;
 		int polygonId;
+		int lineId;
 };
 
 #endif
