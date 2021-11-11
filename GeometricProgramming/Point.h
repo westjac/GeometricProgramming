@@ -16,6 +16,10 @@ class Point
 		int LineId();
 		void AddMetadata(int polygon, string EndPoint, int LineId);
 
+		bool operator<(const Point& rhs){
+			return x < rhs.x;
+		}
+
 	private:
 		float x;
 		float y;

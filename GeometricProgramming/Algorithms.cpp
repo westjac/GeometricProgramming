@@ -66,7 +66,7 @@ bool OnSegment(Point p1, Point p2, Point p3)
 bool AnySegmentIntersect(vector<Line> lines)
 {
 	//set T - Active points
-	set<Point> T;
+	set<Point, ComparePoints> T;
 	//unordered map
 
 	//Push all sweep line events to a vector of Points
@@ -88,8 +88,12 @@ bool AnySegmentIntersect(vector<Line> lines)
 			T.insert(point);
 			set<Point>::iterator above = T.lower_bound(point);
 			set<Point>::iterator below = BELOW(T, above);
-			if ((above != T.end() && SegIntersect(lines[((above)->LineId())], lines[point.LineId()])) ||
-				(below != T.end() && SegIntersect(lines[(below)->LineId()], lines[point.LineId()])))
+			Point f = (*above);
+			int aboveLineId = f.LineId();
+			f = (*below);
+			int belowLineId = f.LineId();
+			if ((above != T.end() && SegIntersect(lines[aboveLineId], lines[point.LineId()])) ||
+				(below != T.end() && SegIntersect(lines[belowLineId], lines[point.LineId()])))
 				return true;
 		}
 		if (point.EndPoint() == "R")
@@ -98,10 +102,13 @@ bool AnySegmentIntersect(vector<Line> lines)
 			int index = point.LineId();
 			auto itr = T.find(Point(lines[index].Left().X(), lines[index].Left().Y(), point.Polygon(), "L", point.LineId()));
 			
+			
 			set<Point>::iterator above = ABOVE(T, itr);
 			set<Point>::iterator below = BELOW(T, itr);
+			Point f = (*below);
+			int belowLineId = f.LineId();
 
-			if ((above != T.end() && below != T.end()) && SegIntersect(lines[(below)->LineId()], lines[point.LineId()]))
+			if ((above != T.end() && below != T.end()) && SegIntersect(lines[belowLineId], lines[point.LineId()]))
 				return true;
 			
 			//Remove current segment
@@ -112,7 +119,7 @@ bool AnySegmentIntersect(vector<Line> lines)
 }
 
 // Find predecessor of iterator in s.
-set<Point>::iterator BELOW(set<Point>& T, set<Point>::iterator it) {
+set<Point>::iterator BELOW(set<Point, ComparePoints>& T, set<Point>::iterator it) {
 	if (it == T.begin())
 		return T.end();
 	else
@@ -120,7 +127,7 @@ set<Point>::iterator BELOW(set<Point>& T, set<Point>::iterator it) {
 }
 
 // Find successor of iterator in s.
-set<Point>::iterator ABOVE(set<Point>& T, set<Point>::iterator it) {
+set<Point>::iterator ABOVE(set<Point, ComparePoints>& T, set<Point>::iterator it) {
 	return ++it;
 }
 

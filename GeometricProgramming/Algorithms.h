@@ -14,7 +14,7 @@ float crossProduct(Point start, Point endLine1, Point endLine2);
 int signOf(float crossProductResult);
 bool OnSegment(Point p1, Point p2, Point p3);
 bool AnySegmentIntersect(vector<Line> lines);
-Line ABOVE(set<Point> T, Point p);
-Line BELOW(set<Point> T, Point p);
+set<Point>::iterator BELOW(set<Point, ComparePoints>& T, set<Point>::iterator it);
+set<Point>::iterator ABOVE(set<Point, ComparePoints>& T, set<Point>::iterator it);
 
 #endif

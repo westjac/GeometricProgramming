@@ -9,7 +9,7 @@ bool cmpPts(Point a, Point b);
 class ComparePoints
 {
 public:
-    bool operator() (Point a, Point b);
+    bool operator() (Point a, Point b) const;
 };
 
 #endif

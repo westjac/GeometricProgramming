@@ -16,7 +16,7 @@ bool cmpPts(Point a, Point b)
 		return a.X() < b.X(); //Lowest X
 }
 
-bool ComparePoints::operator()(Point a, Point b)
+bool ComparePoints::operator()(Point a, Point b) const
 {
 	if (a.X() == b.X()) //If the Xs are the same
 		return a.Y() < b.Y(); //Lowest Y first
