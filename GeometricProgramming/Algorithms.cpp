@@ -1,6 +1,8 @@
 #include <vector>
 #include <algorithm>
 #include "Algorithms.h"
+#include <iostream>
+
 
 int SegIntersect(Line s1, Line s2)
 {
@@ -68,6 +70,7 @@ bool AnySegmentIntersect(vector<Line> lines)
 	//set T - Active points
 	set<Point, ComparePoints> T;
 	//unordered map
+	unordered_map<int, int> foundIntersections;
 
 	//Push all sweep line events to a vector of Points
 	vector<Point> sortedPoints;
@@ -88,15 +91,24 @@ bool AnySegmentIntersect(vector<Line> lines)
 			T.insert(point);
 			set<Point>::iterator above = T.lower_bound(point);
 			set<Point>::iterator below = BELOW(T, above);
-			Point f = (*above);
-			int aboveLineId = f.LineId();
-			f = (*below);
-			int belowLineId = f.LineId();
-			if ((above != T.end() && SegIntersect(lines[aboveLineId], lines[point.LineId()])) ||
-				(below != T.end() && SegIntersect(lines[belowLineId], lines[point.LineId()])))
-				return true;
+			Point a;
+			Point b;
+			if (above != T.end())
+				a = (*above);
+			if(below != T.end())
+				b = (*below);
+			if (above != T.end() && SegIntersect(lines[a.LineId()], lines[point.LineId()]))
+			{
+				AddIntersection(foundIntersections, point.Polygon(), a.Polygon());
+
+			}
+			else if(below != T.end() && SegIntersect(lines[b.LineId()], lines[point.LineId()]))
+			{
+				AddIntersection(foundIntersections, point.Polygon(), b.Polygon());
+				//return true;
+			}
 		}
-		if (point.EndPoint() == "R")
+		else if (point.EndPoint() == "R")
 		{
 			//Get the iterator
 			int index = point.LineId();
@@ -105,17 +117,29 @@ bool AnySegmentIntersect(vector<Line> lines)
 			
 			set<Point>::iterator above = ABOVE(T, itr);
 			set<Point>::iterator below = BELOW(T, itr);
-			Point f = (*below);
-			int belowLineId = f.LineId();
+			Point b;
+			if (below != T.end())
+				b = (*below);
 
-			if ((above != T.end() && below != T.end()) && SegIntersect(lines[belowLineId], lines[point.LineId()]))
-				return true;
+			if ((above != T.end() && below != T.end()) && SegIntersect(lines[b.LineId()], lines[point.LineId()]))
+			{
+				AddIntersection(foundIntersections, point.Polygon(), b.Polygon());
+				//return true;
+			}
 			
 			//Remove current segment
-			T.erase(itr);
+			if(itr != T.end())
+				T.erase(itr);
 		}
 	}
-	return false;
+	int s = 0;
+
+	cout << foundIntersections.size() << endl;
+	for (auto x : foundIntersections)
+	{
+		cout << x.first << " " << x.second << endl;
+	}
+	return true;
 }
 
 // Find predecessor of iterator in s.
@@ -128,7 +152,41 @@ set<Point>::iterator BELOW(set<Point, ComparePoints>& T, set<Point>::iterator it
 
 // Find successor of iterator in s.
 set<Point>::iterator ABOVE(set<Point, ComparePoints>& T, set<Point>::iterator it) {
+	if (it == T.end())
+		return T.begin();
 	return ++it;
+}
+
+void AddIntersection(unordered_map<int, int>& map, int s1, int s2)
+{
+	if (s1 == s2)
+		return; //Same polygon
+	else if (map.find(s1) == map.end())
+		if (map.find(s2) == map.end())
+		{
+			map.insert(make_pair(s1, s2)); //Either pair ordering does not exist
+			return;
+		}
+		else
+		{
+			if (map[s2] == s1)
+				return; //Pair already exists
+			else
+			{
+				map.insert(make_pair(s1, s2)); //Either pair ordering does not exist
+				return;
+			}
+		}
+	else
+	{
+		if (map[s1] == s2)
+			return; //Pair already exisits
+		else
+		{
+			map.insert(make_pair(s1, s2)); //Either pair ordering does not exist
+			return;
+		}
+	}
 }
 
 //Line ABOVE(set<Point> T, Point p)

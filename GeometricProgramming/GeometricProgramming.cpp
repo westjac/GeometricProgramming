@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
         polygonId++;
     }
     
+
     //At this point I now have a vector of lines read in from file,
     //    where each line has a polygon id.
 
@@ -120,6 +121,6 @@ int main(int argc, char *argv[])
     //Sort heap start from lowest value leftX point on the lines
     //sort_heap(lines.begin(), lines.end(), lineCompareator);
 
-    //AnySegmentIntersect(lines, allPoints);
+    AnySegmentIntersect(lines);
 }
 

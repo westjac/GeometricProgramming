@@ -61,6 +61,14 @@
     <Text Include="poly09.txt" />
     <Text Include="poly10.txt" />
     <Text Include="poly11.txt" />
+    <Text Include="lineText0.txt" />
+    <Text Include="lineText1.txt" />
+    <Text Include="lineText2.txt" />
+    <Text Include="lineText3.txt" />
+    <Text Include="lineText4.txt" />
+    <Text Include="lineText5.txt" />
+    <Text Include="lineText6.txt" />
+    <Text Include="lineText7.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GeometricProgramming.rc">

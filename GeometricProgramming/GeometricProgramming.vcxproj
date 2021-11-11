@@ -153,6 +153,14 @@
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="lineText0.txt" />
+    <Text Include="lineText1.txt" />
+    <Text Include="lineText2.txt" />
+    <Text Include="lineText3.txt" />
+    <Text Include="lineText4.txt" />
+    <Text Include="lineText5.txt" />
+    <Text Include="lineText6.txt" />
+    <Text Include="lineText7.txt" />
     <Text Include="poly00.txt" />
     <Text Include="poly01.txt" />
     <Text Include="poly02.txt" />
