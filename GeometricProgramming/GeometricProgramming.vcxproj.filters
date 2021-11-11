@@ -69,6 +69,7 @@
     <Text Include="lineText5.txt" />
     <Text Include="lineText6.txt" />
     <Text Include="lineText7.txt" />
+    <Text Include="lineTextJ.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GeometricProgramming.rc">

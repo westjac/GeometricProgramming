@@ -6,8 +6,93 @@
 #include <sstream>
 #include "Line.h"
 #include "Algorithms.h"
+#include <chrono>
 
 using namespace std;
+
+int randNumber()
+{
+    return (rand() % 2000 - 1000);
+}
+
+void runTests()
+{
+    int numberOfTests = 800;
+    ofstream file;
+    file.open("sortTests.csv", std::ofstream::out | std::ofstream::trunc);
+    file << "Time values are in nanoseconds\n";
+    file << "Test Length, Time (ns), answer size\n";
+
+    for (int i = 2; i < numberOfTests + 1; i++)
+    {
+        //Generate the random pairs
+        vector<pair<int, int>> lines(i);
+        vector<pair<int, int>> strength(i);
+        vector<int> answer; //Answer Array
+        srand(time(NULL));
+
+        for (int j = 0; j < i; j++)
+        {
+            //Creating the line objects
+            string line = "";
+            vector<Line> lines;
+            vector<Point> points;
+
+            float x = 0;
+            float y = 0;
+            points.clear();
+            //Get all points for the given line
+            while (ss >> x >> y)
+            {
+                points.push_back(Point(randNumber(), randNumber()));
+                points.push_back(Point(randNumber(), randNumber()));
+            }
+
+            //create line segments, makes sure the leftmost point is set correctly
+            for (int i = 0; i < points.size(); i++)
+            {
+                if (i == points.size() - 1) //Special case for last item
+                {
+                    if (points[i].X() <= points[0].X())
+                    {
+                        lines.push_back(Line(points[i], points[0], polygonId, lineId));
+                    }
+                    else
+                    {
+                        lines.push_back(Line(points[0], points[i], polygonId, lineId));
+                    }
+                }
+                else
+                {
+                    if (points[i].X() <= points[i + 1].X())
+                    {
+                        lines.push_back(Line(points[i], points[i + 1], polygonId, lineId));
+                    }
+                    else
+                    {
+                        lines.push_back(Line(points[i + 1], points[i], polygonId, lineId));
+                    }
+                }
+                lineId++;
+            }
+            polygonId++;
+
+        }
+
+        //Time Tests
+        auto start = chrono::high_resolution_clock::now();
+        LCS_LENGTH(sortedDiameter, sortedStrength, direction, cost);
+        GET_LCS(direction, sortedDiameter, answer, sortedDiameter.size(), sortedDiameter.size());
+        int duplicateCount = Remove_Duplicates(answer, diameter, strength);
+        auto end = chrono::high_resolution_clock::now();
+        auto elapsedTime = end - start;
+
+        file << i << "," << elapsedTime.count() << "," << answer.size() - duplicateCount << "\n";
+    }
+
+    file.close();
+    return 0;
+}
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +100,11 @@ int main(int argc, char *argv[])
     ifstream inFile;
     if(argc == 2)
     {
+        if (argv[1] == "test")
+        {
+            runTests();
+            return 0;
+        }
         string fileName = argv[1];
         inFile.open(fileName);
     }
@@ -121,6 +211,12 @@ int main(int argc, char *argv[])
     //Sort heap start from lowest value leftX point on the lines
     //sort_heap(lines.begin(), lines.end(), lineCompareator);
 
-    AnySegmentIntersect(lines);
+    unordered_map<int, int> foundIntersections = AnySegmentIntersect(lines);
+
+    cout << foundIntersections.size() << endl;
+    for (auto x : foundIntersections)
+    {
+        cout << x.first << " " << x.second << endl;
+    }
 }
 

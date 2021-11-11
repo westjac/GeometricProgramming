@@ -65,7 +65,7 @@ bool OnSegment(Point p1, Point p2, Point p3)
 		return false;
 }
 
-bool AnySegmentIntersect(vector<Line> lines)
+unordered_map<int, int> AnySegmentIntersect(vector<Line> lines)
 {
 	//set T - Active points
 	set<Point, ComparePoints> T;
@@ -105,7 +105,6 @@ bool AnySegmentIntersect(vector<Line> lines)
 			else if(below != T.end() && SegIntersect(lines[b.LineId()], lines[point.LineId()]))
 			{
 				AddIntersection(foundIntersections, point.Polygon(), b.Polygon());
-				//return true;
 			}
 		}
 		else if (point.EndPoint() == "R")
@@ -124,7 +123,6 @@ bool AnySegmentIntersect(vector<Line> lines)
 			if ((above != T.end() && below != T.end()) && SegIntersect(lines[b.LineId()], lines[point.LineId()]))
 			{
 				AddIntersection(foundIntersections, point.Polygon(), b.Polygon());
-				//return true;
 			}
 			
 			//Remove current segment
@@ -132,14 +130,7 @@ bool AnySegmentIntersect(vector<Line> lines)
 				T.erase(itr);
 		}
 	}
-	int s = 0;
-
-	cout << foundIntersections.size() << endl;
-	for (auto x : foundIntersections)
-	{
-		cout << x.first << " " << x.second << endl;
-	}
-	return true;
+	return foundIntersections;
 }
 
 // Find predecessor of iterator in s.
